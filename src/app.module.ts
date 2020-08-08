@@ -6,10 +6,11 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigurationModule } from './configuration/configuration.module';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
+
 import { PrinterController } from './printer/printer.controller';
 
 import configuration from './configuration/configuration';
-
 
 import { PrinterModule } from './printer/printer.module';
 
@@ -26,6 +27,7 @@ import { PrinterModule } from './printer/printer.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    ScheduleModule.forRoot(),
     PrinterModule,
     ConfigurationModule
   ],
