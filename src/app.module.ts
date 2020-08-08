@@ -6,8 +6,12 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigurationModule } from './configuration/configuration.module';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PrinterController } from './printer/printer.controller';
 
 import configuration from './configuration/configuration';
+
+
+import { PrinterModule } from './printer/printer.module';
 
 @Module({
   imports: [
@@ -21,7 +25,9 @@ import configuration from './configuration/configuration';
       database: __dirname + '/../database/database.sqlite',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-    })
+    }),
+    PrinterModule,
+    ConfigurationModule
   ],
   controllers: [AppController],
   providers: [AppService],
