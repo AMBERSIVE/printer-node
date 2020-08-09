@@ -5,11 +5,21 @@ export class Printjob {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
-    
+
+    @Column()
+    type: string
+
     @Column()
     url: string
 
-    @Column()
-    printed:boolean
+    @Column({
+        default: false
+    })
+    progress:boolean
+
+    @Column({
+        default: false
+    })
+    done:boolean
 
 }

@@ -67,7 +67,7 @@ export class PrinterService {
         });
     }
 
-    async print():  {
+    async print()  {
 
     }
 
