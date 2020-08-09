@@ -18,4 +18,7 @@ export class Printer {
     @Column({ default: false })
     active: boolean
 
+    @Column({ default: false })
+    isDefault: boolean
+
 }

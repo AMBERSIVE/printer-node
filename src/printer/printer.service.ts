@@ -18,22 +18,34 @@ export class PrinterService {
             private configService: ConfigService
         ) {}
 
+    
     @Cron(CronExpression.EVERY_5_SECONDS)
     async handleCron() {
 
         let printerList = await ptp.getPrinters();
         let printerSaved = await this.findAll();
+        let printerDefault = await ptp.getDefaultPrinter();
 
         printerList.forEach(async (printer) => {
             try {
+
                 let entry = await this.repository.findOne({name: printer});
 
                 if (!entry) {
                     let newPrinter = new Printer();
                     newPrinter.name = printer;
-                    newPrinter.active = true
+                    newPrinter.active = true;
                     this.create(newPrinter);
+
+                    entry = newPrinter;
                 }
+
+                // Is this the default printer of the system?
+                if (entry.name === printerDefault) {
+                    entry.isDefault = true;
+                    this.update(entry);
+                }
+
             } catch(err) {
 
             }
@@ -55,17 +67,19 @@ export class PrinterService {
         });
     }
 
-    async  findAll(): Promise<Printer[]> {
+    async print():  {
+
+    }
+
+    async findAll(): Promise<Printer[]> {
         return await this.repository.find();
     }
   
     async find(Id: string): Promise<Printer> {
-      return await this.repository.findOne(Id);
+        return await this.repository.findOne(Id);
     }
   
-    async  create(printer: Printer): Promise<Printer> {
-        console.log('CREATE');
-        console.log(printer);
+    async create(printer: Printer): Promise<Printer> {
         return await this.repository.save(printer);
     }
   
