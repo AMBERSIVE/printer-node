@@ -15,11 +15,11 @@ export class Printjob {
     @Column({
         default: false
     })
-    progress:boolean
+    inProgress:boolean
 
     @Column({
         default: false
     })
-    done:boolean
+    isDone:boolean
 
 }

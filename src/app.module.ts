@@ -13,6 +13,8 @@ import { PrinterController } from './printer/printer.controller';
 import configuration from './configuration/configuration';
 
 import { PrinterModule } from './printer/printer.module';
+import { PrinterjobService } from './printerjob/printerjob.service';
+import { PrinterjobModule } from './printerjob/printerjob.module';
 
 @Module({
   imports: [
@@ -29,6 +31,7 @@ import { PrinterModule } from './printer/printer.module';
     }),
     ScheduleModule.forRoot(),
     PrinterModule,
+    PrinterjobModule,
     ConfigurationModule
   ],
   controllers: [AppController],

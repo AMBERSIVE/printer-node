@@ -1,21 +1,21 @@
 import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PrinterController } from './printer.controller';
-import { Printer } from './printer.entity';
-import { PrinterService } from './printer.service';
+import { PrinterjobService } from './printerjob.service';
+import { Printjob } from './printjob.entity';
 
 @Module({
-    imports:[TypeOrmModule.forFeature([Printer]),],
-    controllers:[PrinterController],
+    imports:[TypeOrmModule.forFeature([Printjob]),],
+    controllers:[],
     providers: [
         {provide: 'CONFIG_OPTIONS', useValue: ConfigService}, 
-        PrinterService
+        PrinterjobService
     ],
 })
-export class PrinterModule {
+export class PrinterjobModule {
 
     configure(consumer: MiddlewareConsumer) {
     }
     
 }
+

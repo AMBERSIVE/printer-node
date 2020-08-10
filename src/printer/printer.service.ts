@@ -20,7 +20,7 @@ export class PrinterService {
 
     
     @Cron(CronExpression.EVERY_5_SECONDS)
-    async handleCron() {
+    async updateAvailablePrinters() {
 
         let printerList = await ptp.getPrinters();
         let printerSaved = await this.findAll();
@@ -65,10 +65,6 @@ export class PrinterService {
             
 
         });
-    }
-
-    async print()  {
-
     }
 
     async findAll(): Promise<Printer[]> {
