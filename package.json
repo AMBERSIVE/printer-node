@@ -30,10 +30,12 @@
     "@nestjs/schedule": "^0.4.0",
     "@nestjs/swagger": "^4.5.12",
     "@nestjs/typeorm": "^7.1.0",
+    "curl": "^0.1.4",
     "pdf-to-printer": "^1.4.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
+    "sha2": "^1.0.2",
     "sqlite3": "^5.0.0",
     "swagger-ui-express": "^4.1.4",
     "typeorm": "^0.2.25"
