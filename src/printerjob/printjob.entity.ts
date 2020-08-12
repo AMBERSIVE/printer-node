@@ -22,4 +22,9 @@ export class Printjob {
     })
     isDone:boolean
 
+    @Column({
+        default: false
+    })
+    hasError:boolean
+
 }

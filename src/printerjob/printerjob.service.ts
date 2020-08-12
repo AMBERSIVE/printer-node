@@ -26,12 +26,25 @@ export class PrinterjobService {
 
         let jobs = await this.repository.find({isDone: false, inProgress: false});
         
-        console.log(`Jobs found: ${jobs.length}`);
+        console.log(`[PRINTER:INFO] Jobs found: ${jobs.length}`);
 
-        jobs.forEach(job => {
-            this.print(job);
+        jobs.forEach(async (job) => {
+
+            let success = false;
+            
+            try {
+                success = await this.print(job);
+            } catch(err) {
+                success = false;
+            }
+
+            if (success === false) {
+                console.error(`[PRINTER:ERROR]: Service was not able to print the document (Job ID: ${job.id})`);
+                job.inProgress = false;
+                this.update(job);
+            }
+
         });
-        // TODO: handle the printer queue
     }
 
     /**
@@ -57,29 +70,54 @@ export class PrinterjobService {
         })
     }
 
-    async print(job: Printjob) {
+    /**
+     * Print a document
+     * @param job 
+     */
+    async print(job: Printjob): Promise<boolean> {
 
-        let id: string = await this.downloadFile(job.url);
+        return new Promise(async(resolve, reject) => {
 
-        // Mark document to be in print job line
-        job.inProgress = true;
-        this.update(job);
+            let id: string = '';
 
-        try {
+            switch(job.type) {
+                case 'api':
+                    id = await this.downloadFile(job.url);
+                    break;
+                default:
+                    break;
+            }
 
-            await ptp.print(`temp/${id}.pdf`);
-            fs.unlinkSync(`temp/${id}.pdf`);
+            if (id === '') {
+                reject('Unsupported type.');
+                job.isDone = true;
+                job.hasError = true;
+                this.update(job);
+                return;
+            }
 
-            // Mark document as printed
-            job.inProgress = false;
-            job.isDone = true;
+            // Mark document to be in print job line
+            job.inProgress = true;
             this.update(job);
 
-        } catch(err) {
+            try {
 
-            console.error(err);
+                await ptp.print(`temp/${id}.pdf`);
+                fs.unlinkSync(`temp/${id}.pdf`);
 
-        }
+                // Mark document as printed
+                job.inProgress = false;
+                job.isDone = true;
+                this.update(job);
+
+                resolve(true);
+
+            } catch(err) {
+                console.error(err);
+                reject(err);
+            }
+
+        })
 
     }
 
