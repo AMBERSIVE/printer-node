@@ -47,4 +47,19 @@ export class PrinterController {
 
     }
 
+    @Get("api/printer/:id")
+    async getPrinterSingle(@Param() params, @Req() req: Request, @Res() res: Response) {
+
+        let printer = await this.printerService.find(params.id ? params.id : null);
+
+        if (printer === null || printer === undefined) {
+            return res.status(HttpStatus.BAD_REQUEST).json({
+                message: `${params.id} cannot be found`
+            });
+        }
+
+        res.status(HttpStatus.OK).json(printer);
+    }
+
+
 }
