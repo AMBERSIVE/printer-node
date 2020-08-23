@@ -13,9 +13,8 @@ const ptp = require("pdf-to-printer");
 export class PrinterService {
 
     constructor(
-        @InjectRepository(Printer)
-            private repository: Repository<Printer>,
-            private configService: ConfigService
+        @InjectRepository(Printer)  private repository: Repository<Printer>,
+        private configService: ConfigService
         ) {}
 
     

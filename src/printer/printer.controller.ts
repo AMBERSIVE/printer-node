@@ -3,7 +3,6 @@ import { Response, Request } from 'express';
 import { PrinterService } from './printer.service';
 import { time } from 'console';
 
-
 @Controller()
 export class PrinterController {
 
@@ -12,7 +11,9 @@ export class PrinterController {
         'isDefault'
     ];
 
-    constructor(private readonly printerService: PrinterService) {
+    constructor(
+        private readonly printerService: PrinterService
+    ) {
         
     }
 
@@ -60,6 +61,5 @@ export class PrinterController {
 
         res.status(HttpStatus.OK).json(printer);
     }
-
 
 }

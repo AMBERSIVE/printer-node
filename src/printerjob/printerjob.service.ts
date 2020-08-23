@@ -16,9 +16,8 @@ const SHA2 = require("sha2");
 export class PrinterjobService {
 
     constructor(
-        @InjectRepository(Printjob)
-            private repository: Repository<Printjob>,
-            private configService: ConfigService
+        @InjectRepository(Printjob) private repository: Repository<Printjob>,
+        private configService: ConfigService
         ) {}
 
     @Cron(CronExpression.EVERY_5_SECONDS)
@@ -36,6 +35,7 @@ export class PrinterjobService {
                 success = await this.print(job);
             } catch(err) {
                 success = false;
+                console.log('EROR');
             }
 
             if (success === false) {
