@@ -128,6 +128,10 @@ export class PrinterjobService {
     async find(Id: string): Promise<Printjob> {
         return await this.repository.findOne(Id);
     }
+
+    async findEntries(statement): Promise<Printjob[]> {
+        return await this.repository.find(statement);
+    }
   
     async create(Printjob: Printjob): Promise<Printjob> {
         return await this.repository.save(Printjob);
